@@ -6,10 +6,10 @@
 
 <!DOCTYPE html>
 <html lang="ja" ng-app="<?php echo NG_APP; ?>">
-<?php
-include dirname(__FILE__) . '/head.tpl.php';
-?>
+<?php include dirname(__FILE__) . '/head.tpl.php'; ?>
 <body>
+  <?php include dirname(__FILE__) . '/header.tpl.php'; ?>
+
   <div class="container" ng-controller="GroupCtrl">
 
     <h1>{{ group.name }}</h1>
@@ -20,9 +20,7 @@ include dirname(__FILE__) . '/head.tpl.php';
       </li>
     </ul>
 
-<?php
-include dirname(__FILE__) . '/footer.tpl.php';
-?>
+  <?php include dirname(__FILE__) . '/footer.tpl.php'; ?>
 
   </div><!-- /.container -->
 

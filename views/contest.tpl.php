@@ -6,14 +6,14 @@
 
 <!DOCTYPE html>
 <html lang="ja" ng-app="<?php echo NG_APP; ?>">
-<?php
-include dirname(__FILE__) . '/head.tpl.php';
-?>
+<?php include dirname(__FILE__) . '/head.tpl.php'; ?>
 <body>
+  <?php include dirname(__FILE__) . '/header.tpl.php'; ?>
+
   <div class="container" ng-controller="ContestCtrl">
 
-    <h1>{{ group.name }} {{ contest.name }}</h1>
- 
+    <h2>{{ group.name }} {{ contest.name }}</h2>
+
     <p>
       <i class="fa fa-calendar"></i> {{ contest.date }}
     </p>
@@ -71,9 +71,7 @@ include dirname(__FILE__) . '/head.tpl.php';
       </table>
     </div><!-- /#table-scrambles-container -->
 
-<?php
-include dirname(__FILE__) . '/footer.tpl.php';
-?>
+  <?php include dirname(__FILE__) . '/footer.tpl.php'; ?>
 
   </div><!-- /.container -->
 

@@ -33,6 +33,7 @@ $contest_page = false;
 
 $cid = -1;
 $title = '';
+$header = '<i class="fa fa-flask"></i> ' . MAIN_TITLE;
 
 // ルーティング
 // トップページ
