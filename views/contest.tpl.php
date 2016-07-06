@@ -18,7 +18,7 @@
       <li class="active">{{ contest.name }}</li>
     </ol>
 
-    <h2>{{ group.name }} {{ contest.name }}</h2>
+    <h2>{{ contest.name }} <small>{{ group.name }}</small></h2>
 
     <p>
       <i class="fa fa-calendar"></i> {{ contest.date }}
@@ -30,7 +30,7 @@
           <tr>
             <th></th>
             <th>Name</th>
-            <th class="col-result">Result</th>
+            <th class="col-result">Average</th>
             <th class="col-detail col-desktop">1st</th>
             <th class="col-detail col-desktop">2nd</th>
             <th class="col-detail col-desktop">3rd</th>
@@ -46,11 +46,27 @@
             <td>{{ record.name }}</td>
             <td data-order="{{ record.average.average }}"><b>{{ record.averageF }}</b></td>
             <td data-order="{{ detail }}" class="col-detail col-desktop" ng-repeat="detail in record.details">
-              {{ detail | formatTime }}
+              <span class="text-success" ng-show="record.average.best == $index">
+                ({{ detail | formatTime }})
+              </span>
+              <span class="text-danger" ng-show="record.average.worst == $index">
+                ({{ detail | formatTime }})
+              </span>
+              <span ng-show="record.average.best != $index && record.average.worst != $index">
+                {{ detail | formatTime }}
+              </span>
             </td>
             <td class="col-details col-mobile">
               <span ng-repeat="detail in record.details">
-                {{ detail | formatTime }}
+                <span class="text-success" ng-show="record.average.best == $index">
+                  ({{ detail | formatTime }})
+                </span>
+                <span class="text-danger" ng-show="record.average.worst == $index">
+                  ({{ detail | formatTime }})
+                </span>
+                <span ng-show="record.average.best != $index && record.average.worst != $index">
+                  {{ detail | formatTime }}
+                </span>
               </span>
             <td>
               <a href="https://store.tribox.com/products/detail.php?product_id=<?php echo $result['puzzle']['id']; ?>" target="_blank" ng-show="record.puzzle.id">
