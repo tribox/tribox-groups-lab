@@ -12,6 +12,11 @@
 
   <div class="container" ng-controller="GroupCtrl">
 
+    <ol class="breadcrumb">
+      <li><a href="/"><?php echo MAIN_TITLE; ?></a></li>
+      <li class="active">{{ group.name }}</li>
+    </ol>
+
     <h2>{{ group.name }}</h2>
 
     <ul>

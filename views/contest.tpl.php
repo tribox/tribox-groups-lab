@@ -12,6 +12,12 @@
 
   <div class="container" ng-controller="ContestCtrl">
 
+    <ol class="breadcrumb">
+      <li><a href="/"><?php echo MAIN_TITLE; ?></a></li>
+      <li><a href="/<?php echo $tag; ?>">{{ group.name }}</a></li>
+      <li class="active">{{ contest.name }}</li>
+    </ol>
+
     <h2>{{ group.name }} {{ contest.name }}</h2>
 
     <p>
