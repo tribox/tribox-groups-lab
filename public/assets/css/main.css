@@ -13,13 +13,14 @@ header.navbar {
 }
 header.navbar h1 {
     color: #fff;
+    margin-top: 10px;
 }
 
-/*@media (max-width: 768px) {
-    h1 { font-size: 28px; }
-    h2 { font-size: 20px; }
+@media (max-width: 480px) {
+    header.navbar h1 {
+        font-size: 28px;
+    }
 }
-h3 { font-size: 20px; }*/
 
 .table-container {
     margin-bottom: 50px;
@@ -53,4 +54,9 @@ footer {
 footer p {
     text-align: center;
     font-size: 16px;
+}
+@media (max-width: 480px) {
+    footer p {
+        font-size: 12px;
+    }
 }

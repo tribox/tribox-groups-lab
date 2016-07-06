@@ -12,7 +12,7 @@
 
   <div class="container" ng-controller="GroupCtrl">
 
-    <h1>{{ group.name }}</h1>
+    <h2>{{ group.name }}</h2>
 
     <ul>
       <li ng-repeat="(cid, contest) in contests">
