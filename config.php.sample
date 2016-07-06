@@ -1,0 +1,3 @@
+<?php
+
+define('ABSOLUTE_URL', 'http://lab.tribox.com');

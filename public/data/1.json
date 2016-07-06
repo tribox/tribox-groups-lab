@@ -1,0 +1,42 @@
+{
+    "contest_name": "戸川研コンテスト 第1回",
+    "date": "2016-07-01 (金)",
+    "event_name": "3x3x3",
+
+    "scrambles": [
+        "F' R' U' D2 B' D' L' U2 B' D R2 F2 B' R2 F2 B U2 R2 B' L2 B'",
+        "D2 U2 B U2 L2 B' R2 B2 F2 U' L2 D2 R B2 F' R F2 U R2 U2",
+        "D2 F' L2 F' U2 F' L2 R2 F D' F2 L F' L' B U' R U2 B2 L",
+        "L' B2 L2 U2 B2 F2 R D2 B R' B D F U B' R B' D2 L'",
+        "R B2 D' B2 D2 B L' D F U' F U2 F' D2 F D2 F R2 B2 D2"
+    ],
+    "scramble_info": "TNoodle (WCA 0.11.1)",
+
+    "results": [
+        {
+            "name": "河野",
+            "records": ["1:42.530", "1:31.516", "1:55.528", "1:33.241", "1:28.798"],
+            "puzzle": {"name": "YJ GuanLong", "id": 1472}
+        },
+        {
+            "name": "矢野",
+            "records": ["1:36.769", "1:47.941", "1:43.775", "1:39.057", "2:07.722"],
+            "puzzle": {"name": "YJ GuanLong", "id": 1472}
+        },
+        {
+            "name": "寺田",
+            "records": ["13.818", "14.820", "14.987", "17.392", "14.759"],
+            "puzzle": {"name": "YJ GuanLong", "id": 1472}
+        },
+        {
+            "name": "長谷川",
+            "records": ["1:08.790", "1:06.389", "1:05.123", "1:07.864", "1:21.463"],
+            "puzzle": {"name": "YJ GuanLong", "id": 1472}
+        },
+        {
+            "name": "多和田",
+            "records": ["1:19.655", "1:34.024", "1:34.169", "2:10.264", "2:53.969"],
+            "puzzle": {"name": "YJ GuanLong", "id": 1472}
+        }
+    ]
+}

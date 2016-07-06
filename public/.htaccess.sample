@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# Please set below if the project is not on the document root
+#RewriteBase /path/to/groupslab
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
