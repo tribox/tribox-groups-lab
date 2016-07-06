@@ -3,7 +3,10 @@
 define('ROOT_PATH',  dirname(__FILE__) . '/..');
 define('VIEWS_PATH', ROOT_PATH . '/views');
 
-define('NG_APP', 'app');
+// ユーザ指定では無いような設定値
+// (ユーザ指定設定は config.php)
+define('NG_APP',     'app');
+define('MAIN_TITLE', 'とらいぼっくすらぼ');
 
 include_once ROOT_PATH . '/config.php';
 include_once ROOT_PATH . '/functions.php';
@@ -29,14 +32,15 @@ $title = '';
 // トップページ
 if (empty($query) || $query === '') {
     $index_page = true;
-    $title = 'lab.tribox.com';
+    $title = MAIN_TITLE;
+
     include VIEWS_PATH . '/index.tpl.php';
 }
 // コンテスト結果
 else {
     $contest_page = true;
     $contest_no = (int)$query;
-    $title = '戸川研コンテスト 第' . $contest_no . '回';
+    $title = '戸川研コンテスト 第' . $contest_no . '回 # ' . MAIN_TITLE;
 
     // コンテストデータ読み込み
     $jsonstr = file_get_contents(dirname(__FILE__) . '/data/' . $contest_no . '.json');
