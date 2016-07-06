@@ -5,5 +5,5 @@
 ?>
 
 <header id="top" class="navbar">
-  <h1><?php echo $header; ?></h1>
+  <a href="/"><h1><?php echo $header; ?></h1></a>
 </header>
