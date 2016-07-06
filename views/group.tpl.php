@@ -17,7 +17,7 @@
       <li class="active">{{ group.name }}</li>
     </ol>
 
-    <h2>{{ group.name }}</h2>
+    <h2>{{ group.name }} のコンテスト一覧</h2>
 
     <ul>
       <li ng-repeat="(cid, contest) in contests">
