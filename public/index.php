@@ -3,6 +3,8 @@
 define('ROOT_PATH',  dirname(__FILE__) . '/..');
 define('VIEWS_PATH', ROOT_PATH . '/views');
 
+define('NG_APP', 'app');
+
 include_once ROOT_PATH . '/config.php';
 include_once ROOT_PATH . '/functions.php';
 
@@ -16,19 +18,23 @@ $URIs = explode('/', $_SERVER['REQUEST_URI']);
 $query = end($URIs);
 //var_dump($query);
 
-$is_index = false;
+// 表示ページ
+$index_page = false;
+$contest_page = false;
+
 $contest_no = -1;
 $title = '';
 
 // ルーティング
 // トップページ
 if (empty($query) || $query === '') {
+    $index_page = true;
     $title = 'lab.tribox.com';
     include VIEWS_PATH . '/index.tpl.php';
 }
 // コンテスト結果
 else {
-    $is_index = false;
+    $contest_page = true;
     $contest_no = (int)$query;
     $title = '戸川研コンテスト 第' . $contest_no . '回';
 
