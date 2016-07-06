@@ -1,6 +1,6 @@
 <?php
 /**
- * templates/index.tpl.php
+ * views/index.tpl.php
  */
 ?>
 
@@ -10,15 +10,20 @@
 include dirname(__FILE__) . '/head.tpl.php';
 ?>
 <body>
-  <div class="container" style="padding-right: 5px; padding-left: 5px;" ng-controller="IndexCtrl">
+  <div class="container" ng-controller="IndexCtrl">
 
-    <h1><?php echo $title; ?></h1>
+    <h1><i class="fa fa-flask"></i> <?php echo $title; ?></h1>
 
-    <pre>{{ groups | json }}</pre>
-
-    <ul>
-        <li><a href="<?php echo ABSOLUTE_URL ?>/1">第1回 (2016-07-01)</a></li>
-    </ul>
+    <div class="row">
+      <div class="md-12" ng-repeat="(tag, group) in groups">
+        <h2>{{ group.name }}</h2>
+        <ul>
+          <li ng-repeat="(cid, contest) in contests[group.gid]">
+            <a href="/{{ tag }}/{{ cid | removeHead }}">{{ contest.name }} ({{ contest.date }})</a>
+          </li>
+        </ul>
+      </div>
+    </div><!-- /.row -->
 
 <?php
 include dirname(__FILE__) . '/footer.tpl.php';
@@ -29,10 +34,18 @@ include dirname(__FILE__) . '/footer.tpl.php';
 <script>
 app.controller('IndexCtrl', ['$scope', '$timeout', function($scope, $timeout) {
     $scope.groups = null;
-    ref.child('groups').once('value', function(snap) {
+    $scope.contests = null;
+
+    ref.child('groups').once('value', function(snapGroups) {
+        var Groups = snapGroups.val();
+    ref.child('contests').once('value', function(snapContests) {
+        var Contests = snapContests.val();
+
         $timeout(function() {
-            $scope.groups = snap.val();
+            $scope.groups = Groups;
+            $scope.contests = Contests;
         });
+    });
     });
 }]);
 </script>

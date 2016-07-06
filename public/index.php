@@ -15,58 +15,56 @@ include_once ROOT_PATH . '/functions.php';
 //var_dump($_GET);
 //var_dump($_REQUEST);
 //var_dump($_SERVER);
+$request_uri = $_SERVER['REQUEST_URI'];
+$queries = explode('/', $request_uri);
 
-$URIs = explode('/', $_SERVER['REQUEST_URI']);
-//var_dump($URIs);
-$query = end($URIs);
-//var_dump($query);
+// 末尾にスラッシュがついていたら外したURLにリダイレクト
+// (ただし、スラッシュ1文字の場合は除く)
+if ($request_uri !== '/' && substr($request_uri, -1) === '/') {
+    $target = substr($request_uri, 0, -1);
+    header('Location: ' . $target, TRUE, 302);
+    exit;
+}
 
 // 表示ページ
 $index_page = false;
+$group_page = false;
 $contest_page = false;
 
-$contest_no = -1;
+$cid = -1;
 $title = '';
 
 // ルーティング
 // トップページ
-if (empty($query) || $query === '') {
+if ($request_uri === '/') {
     $index_page = true;
     $title = MAIN_TITLE;
 
     include VIEWS_PATH . '/index.tpl.php';
+    exit;
 }
-// コンテスト結果
-else {
+// グループページ
+else if (preg_match('/^\/[a-zA-Z0-9]{1,15}$/', $request_uri)) {
+    $group_page = true;
+    $tag = $queries[1];
+    $title = MAIN_TITLE . ': ' . $queries[1];
+
+    include VIEWS_PATH . '/group.tpl.php';
+    exit;
+}
+// コンテストページ
+else if (preg_match('/^\/[a-zA-Z0-9]{1,15}\/[0-9]{8}$/', $request_uri)) {
     $contest_page = true;
-    $contest_no = (int)$query;
-    $title = '戸川研コンテスト 第' . $contest_no . '回 # ' . MAIN_TITLE;
-
-    // コンテストデータ読み込み
-    $jsonstr = file_get_contents(dirname(__FILE__) . '/data/' . $contest_no . '.json');
-    $obj = json_decode($jsonstr, true);
-    //var_dump($obj);
-
-    // データ集計
-    foreach ($obj['results'] as $person => $result) {
-        // (1) レコードを数値化
-        $obj['results'][$person]['records_val'] = array();
-        foreach ($result['records'] as $index => $record) {
-            $obj['results'][$person]['records_val'][$index] = parse_record($record);
-        }
-
-        // (2) 結果を計算
-        $obj['results'][$person]['result_val'] = calc_result($obj['results'][$person]['records_val']);
-
-        // (3) 結果をフォーマットして文字列化
-        $obj['results'][$person]['result'] = format_result($obj['results'][$person]['result_val']);
-    }
-    // (4) 順位を確定
-    // TODO: 本当はアベレージが同じ場合はシングルを比較しないといけないけど今は無視
-    foreach ($obj['results'] as $person => $result) {
-        $key_val[$person] = $result['result_val'];
-    }
-    array_multisort($key_val, SORT_ASC, $obj['results']);
+    $tag = $queries[1];
+    $cid = $queries[2];
+    $title = MAIN_TITLE . ': ' . $queries[1] . '/' . $queries[2];
 
     include VIEWS_PATH . '/contest.tpl.php';
+    exit;
+}
+// 404
+else {
+    header("HTTP/1.0 404 Not Found");
+    echo "404 Not Found\n";
+    exit;
 }
