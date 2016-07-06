@@ -112,24 +112,24 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
     ref.child('contests').child(gid).child(cid).once('value', function(snapContest) {
         var Contest = snapContest.val();
     ref.child('results').child(gid).child(cid).once('value', function(snapResult) {
-        var Result = snapResult.val();
-        var ResultArr = { 'records': [], 'scrambles': Result.scrambles };
+        var ResultObj = snapResult.val();
+        var Result = { 'records': [], 'scrambles': ResultObj.scrambles };
 
-        Object.keys(Result.records).forEach(function(uid) {
-            var average = calcAverage5(Result.records[uid].details);
-            Result.records[uid].average = average;
-            Result.records[uid].averageF = formatTime(average.average);
+        Object.keys(ResultObj.records).forEach(function(uid) {
+            var average = calcAverage5(ResultObj.records[uid].details);
+            ResultObj.records[uid].average = average;
+            ResultObj.records[uid].averageF = formatTime(average.average);
             // 整数部をaverageの値(6桁)、小数部をbestの値(6桁)で表現して数値比較でランキングできるようにする
-            Result.records[uid].priority = ( ('000000' + String(average.average).replace('.', '')).slice(-6) + '.' +
-                                             ('000000' + String(Result.records[uid].details[average.best]).replace('.', '')).slice(-6) ) - 0;
-            ResultArr.records.push(Result.records[uid]);
+            ResultObj.records[uid].priority = ( ('000000' + String(average.average).replace('.', '')).slice(-6) + '.' +
+                                             ('000000' + String(ResultObj.records[uid].details[average.best]).replace('.', '')).slice(-6) ) - 0;
+            Result.records.push(ResultObj.records[uid]);
         });
 
         $timeout(function() {
             $scope.groups = Groups;
             $scope.group = Groups[tag];
             $scope.contest = Contest;
-            $scope.result = ResultArr;
+            $scope.result = Result;
             $timeout(function() {
                 window.setupTable();
             }, 100);

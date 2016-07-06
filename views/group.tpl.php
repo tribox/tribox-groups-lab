@@ -20,8 +20,8 @@
     <h2>{{ group.name }} のコンテスト一覧</h2>
 
     <ul>
-      <li ng-repeat="(cid, contest) in contests">
-        <a href="/<?php echo $tag; ?>/{{ cid | removeHead }}">{{ contest.name }} ({{ contest.date }})</a>
+      <li ng-repeat="contest in contests | orderBy: '-cid'">
+        <a href="/<?php echo $tag; ?>/{{ contest.cid | removeHead }}">{{ contest.name }} ({{ contest.date }})</a>
       </li>
     </ul>
 
@@ -38,7 +38,14 @@ app.controller('GroupCtrl', ['$scope', '$timeout', function($scope, $timeout) {
         var Group = snapGroup.val();
         var gid = Group.gid;
     ref.child('contests').child(gid).once('value', function(snapContests) {
-        var Contests = snapContests.val();
+        var ContestsObj = snapContests.val();
+        var Contests = [];
+
+        Object.keys(ContestsObj).forEach(function(cid) {
+            var obj = ContestsObj[cid];
+            obj.cid = cid;
+            Contests.push(obj);
+        });
 
         $timeout(function() {
             $scope.group = Group;

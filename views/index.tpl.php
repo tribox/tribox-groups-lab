@@ -20,8 +20,8 @@
           </div><!-- /.panel-heading -->
           <div class="panel-body">
             <ul>
-              <li ng-repeat="(cid, contest) in contests[group.gid]">
-                <a href="/{{ tag }}/{{ cid | removeHead }}">{{ contest.name }} ({{ contest.date }})</a>
+              <li ng-repeat="contest in contests[group.gid] | orderBy: '-cid'">
+                <a href="/{{ tag }}/{{ contest.cid | removeHead }}">{{ contest.name }} ({{ contest.date }})</a>
               </li>
             </ul>
           </div><!-- /.panel-body -->
@@ -57,7 +57,18 @@ app.controller('IndexCtrl', ['$scope', '$timeout', function($scope, $timeout) {
     ref.child('groups').once('value', function(snapGroups) {
         var Groups = snapGroups.val();
     ref.child('contests').once('value', function(snapContests) {
-        var Contests = snapContests.val();
+        var ContestsObj = snapContests.val();
+        var Contests = {};
+
+        // 配列化
+        Object.keys(ContestsObj).forEach(function(gid) {
+            Contests[gid] = [];
+            Object.keys(ContestsObj[gid]).forEach(function(cid) {
+                var obj = ContestsObj[gid][cid];
+                obj.cid = cid;
+                Contests[gid].push(obj);
+            });
+        });
 
         $timeout(function() {
             $scope.groups = Groups;
