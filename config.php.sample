@@ -1,3 +1,4 @@
 <?php
 
+// Please do not include the tailing slash
 define('ABSOLUTE_URL', 'http://lab.tribox.com');

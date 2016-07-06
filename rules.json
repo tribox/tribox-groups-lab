@@ -1,0 +1,89 @@
+{
+    "rules": {
+        ".read": false,
+        ".write": false,
+
+        // List of groups
+        "groups": {
+            ".read": true,
+            ".write": false,
+            "$groupname": {
+                "name": {
+                    ".validate": "newData.isString()"
+                },
+                "tag": {
+                    ".validate": "newData.isString()"
+                },
+                "gid": {
+                    ".validate": "newData.isString()"
+                },
+                "$other": {
+                    ".validate": false
+                }
+            }
+        },
+
+        // List of contests
+        "contests": {
+            ".read": true,
+            ".write": false,
+            "$gid": {
+                ".write": "auth.uid === $gid",
+                "$cid": {
+                    "name": {
+                        ".validate": "newData.isString()"
+                    },
+                    "date": {
+                        ".validate": "newData.isString()"
+                    },
+                    "$other": {
+                        ".validate": false
+                    }
+                }
+            }
+        },
+
+        // List of results (scrambles and user's records)
+        "results": {
+            ".read": true,
+            ".write": false,
+            "$gid": {
+                ".write": "auth.uid === $gid",
+                "$cid": {
+                    "scrambles": {
+                        "$seq": {
+                            ".validate": "newData.isString()"
+                        }
+                    },
+                    "records": {
+                        "$uid": {
+                            "name": {
+                                ".validate": "newData.isString()"
+                            },
+                            "details": {
+                                "$seq": {
+                                    ".validate": "newData.isString()"
+                                }
+                            },
+                            "puzzle": {
+                                "name": {
+                                    ".validate": "newData.isString()"
+                                },
+                                "id": {
+                                    ".validate": "newData.isNumber() && 0 < newData.val()"
+                                }
+                            },
+                            "$other": {
+                                ".validate": false
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "$other": {
+            ".validate": false
+        }
+    }
+}
