@@ -1,4 +1,7 @@
 <?php
 
+// Firebase app
+define('FIREBASE_APP', 'tribox-groups-lab');
+
 // Please do not include the tailing slash
 define('ABSOLUTE_URL', 'http://lab.tribox.com');

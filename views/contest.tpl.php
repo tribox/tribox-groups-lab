@@ -27,7 +27,7 @@
  * FIREBASE
  */
 var app = angular.module('app', ['firebase']);
-var ref = new Firebase('https://tribox-groups-lab.firebaseio.com');
+var ref = new Firebase('https://<?php echo FIREBASE_APP; ?>.firebaseio.com');
 </script>
 
 </head>
