@@ -1,10 +1,10 @@
 <?php
 
-define('ROOT_PATH',     dirname(__FILE__) . '/..');
-define('TEMPLATES_PATH', ROOT_PATH . '/templates');
+define('ROOT_PATH',  dirname(__FILE__) . '/..');
+define('VIEWS_PATH', ROOT_PATH . '/views');
 
 include_once ROOT_PATH . '/config.php';
-include_once ROOT_PATH . '/../functions.php';
+include_once ROOT_PATH . '/functions.php';
 
 
 //var_dump($_GET);
@@ -24,7 +24,7 @@ $title = '';
 // トップページ
 if (empty($query) || $query === '') {
     $title = 'lab.tribox.com';
-    include TEMPLATES_PATH . '/index.tpl.php';
+    include VIEWS_PATH . '/index.tpl.php';
 }
 // コンテスト結果
 else {
@@ -58,5 +58,5 @@ else {
     }
     array_multisort($key_val, SORT_ASC, $obj['results']);
 
-    include TEMPLATES_PATH . '/contest.tpl.php';
+    include VIEWS_PATH . '/contest.tpl.php';
 }

@@ -33,7 +33,9 @@ var ref = new Firebase('https://tribox-groups-lab.firebaseio.com');
   <div class="container" style="padding-right: 5px; padding-left: 5px;" ng-controller="IndexCtrl">
 
     <h1><?php echo $title; ?></h1>
-{{ groups | json }}
+
+    <pre>{{ groups | json }}</pre>
+
     <ul>
         <li><a href="<?php echo ABSOLUTE_URL ?>/1">第1回 (2016-07-01)</a></li>
     </ul>
