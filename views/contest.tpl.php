@@ -18,7 +18,10 @@
       <li class="active">{{ contest.name }}</li>
     </ol>
 
-    <h2>{{ contest.name }} <small>{{ group.name }}</small></h2>
+    <h2 class="inline-block">{{ contest.name }} <small>{{ group.name }}</small></h2>
+    <a href="#" class="btn btn-default btn-cog" role="button">
+        <i class="fa fa-cog"></i> 編集
+    </a>
 
     <p>
       <i class="fa fa-calendar"></i> {{ contest.date }}

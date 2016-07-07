@@ -17,7 +17,10 @@
       <li class="active">{{ group.name }}</li>
     </ol>
 
-    <h2>{{ group.name }} のコンテスト一覧</h2>
+    <h2 class="inline-block">{{ group.name }} のコンテスト一覧</h2>
+    <a href="#" class="btn btn-default btn-cog" role="button">
+        <i class="fa fa-cog"></i> 編集
+    </a>
 
     <ul>
       <li ng-repeat="contest in contests | orderBy: '-cid'">

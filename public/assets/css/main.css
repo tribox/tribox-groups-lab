@@ -7,6 +7,10 @@ body {
     font-size: 18px;
 }
 
+
+/**
+ * Header
+ */
 header.navbar {
     background-color: #333;
     text-align: center;
@@ -30,6 +34,18 @@ header.navbar a:hover {
     }
 }
 
+h2.inline-block {
+    display: inline-block;
+}
+
+a.btn-cog {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+/**
+ * Table
+ */
 .table-container {
     margin-bottom: 50px;
 }
@@ -53,6 +69,10 @@ th, td {
     .col-mobile  { display: none !important; }
 }
 
+
+/**
+ * Footer
+ */
 footer {
     margin-top: 30px;
     padding-top: 20px;
