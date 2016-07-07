@@ -35,8 +35,8 @@
     <hr>
 
     <p>
-        記録を入力してください。Averageと順位は後で勝手に計算されます。<br>
-        パズルIDを入力するとtriboxストアの商品ページへのリンクが表示されるので、できるだけ入力してください。
+        記録を入力してください。DNFは <i>DNF</i> と入力。Averageと順位は後で勝手に計算されます。<br>
+        パズルIDを入力するとtriboxストアの商品ページへのリンクが表示されるので、できれば入力してください。
     </p>
 
     <div id="table-results-container" class="table-container">
@@ -73,7 +73,7 @@
 
     <p>
         スクランブルを入力してください。
-        今のところ、スクランブル生成機能は無いです。
+        スクランブル生成機能は今のところ無いです。
     </p>
 
     <div id="table-scrambles-container" class="table-container">
@@ -194,7 +194,11 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
         var inputElem = angular.element(document.getElementById(uid + index));
 
         // Check the format
-        if (!(resultForm.match(/^([0-9]:)?[0-9]{1,3}(\.[0-9]{0,3})?$/))) {
+        if (resultForm == 'DNF') {
+            inputElem.parent().removeClass('has-error');
+            $scope.result.records[uid].details[index] = 999.999;
+            $scope.saveRecord(uid);
+        } else if (!(resultForm.match(/^([0-9]:)?[0-9]{1,3}(\.[0-9]{0,3})?$/))) {
             inputElem.parent().addClass('has-error');
         } else {
             // Convert to seconds

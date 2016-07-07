@@ -52,7 +52,7 @@
             <td>{{ $index + 1 }}</td>
             <td>{{ record.name }}</td>
             <td data-order="{{ record.average.average }}"><b>{{ record.averageF }}</b></td>
-            <td data-order="{{ detail }}" class="col-detail col-desktop" ng-repeat="detail in record.details">
+            <td data-order="{{ detail }}" class="col-detail col-desktop" ng-repeat="detail in record.details track by $index">
               <span class="text-success" ng-show="record.average.best == $index">
                 ({{ detail | formatTime }})
               </span>
@@ -64,7 +64,7 @@
               </span>
             </td>
             <td class="col-details col-mobile">
-              <span ng-repeat="detail in record.details">
+              <span ng-repeat="detail in record.details track by $index">
                 <span class="text-success" ng-show="record.average.best == $index">
                   ({{ detail | formatTime }})
                 </span>

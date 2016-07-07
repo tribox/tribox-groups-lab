@@ -7,6 +7,9 @@ var formatTime = function(input) {
     if (input <= 0) {
         return '';
     }
+    if (999 < input) {
+        return 'DNF';
+    }
 
     var post = '.000';
     var second = input - 0;
@@ -59,9 +62,9 @@ var calcAverage5 = function(details) {
     var sum = 0.000;
     var count = 0, countDNF = 0;
     var lowerIndex = -1, upperIndex = -1;
-    var lower = 9999.999, upper = 0.000;
+    var lower = 999.999, upper = 0.000;
     details.forEach(function(d, index) {
-        if (9999 < d) {
+        if (999 < d) {
             countDNF++;
             upperIndex = index;
             if (lowerIndex == -1) {
@@ -87,6 +90,6 @@ var calcAverage5 = function(details) {
         return {'average': (Math.round(((sum - lower) / (count - 1)) * 1000)) / 1000,
                 'best': lowerIndex, 'worst': upperIndex};
     } else {
-        return {'average': 9999.999, 'best': lowerIndex, 'worst': upperIndex};
+        return {'average': 999.999, 'best': lowerIndex, 'worst': upperIndex};
     }
 };
