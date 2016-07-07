@@ -117,37 +117,58 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
 
     var tag = '<?php echo $tag; ?>'
     var cid = '-<?php echo $cid; ?>';
-    var gid;
-    ref.child('groups').once('value', function(snapGroups) {
-        var Groups = snapGroups.val();
-        gid = Groups[tag].gid;
-    ref.child('contests').child(gid).child(cid).once('value', function(snapContest) {
-        var Contest = snapContest.val();
-    ref.child('results').child(gid).child(cid).on('value', function(snapResult) {
-        var Result = snapResult.val();
 
-        // 各記録のフォーマット
-        Object.keys(Result.records).forEach(function(uid) {
-            Result.records[uid].detailsF = [];
-            Result.records[uid].details.forEach(function(time) {
-                Result.records[uid].detailsF.push(formatTime(time));
+    var authData = ref.getAuth();
+    var gid;
+    if (!authData) {
+        location.href = '/<?php echo $tag; ?>/auth?next=/<?php echo $tag; ?>/<?php echo $cid; ?>/edit';
+    } else {
+        ref.child('groups').once('value', function(snapGroups) {
+            var Groups = snapGroups.val();
+            gid = Groups[tag].gid;
+            if (authData.uid != gid) {
+                location.href = '/<?php echo $tag; ?>/auth?next=/<?php echo $tag; ?>/<?php echo $cid; ?>/edit';
+            }
+        ref.child('contests').child(gid).child(cid).once('value', function(snapContest) {
+            var Contest = snapContest.val();
+        ref.child('results').child(gid).child(cid).on('value', function(snapResult) {
+            var Result = snapResult.val();
+
+            // 各記録のフォーマット
+            if (Result) {
+                if (Result.records) {
+                    Object.keys(Result.records).forEach(function(uid) {
+                        Result.records[uid].detailsF = [];
+                        if (Result.records[uid].details) {
+                            Result.records[uid].details.forEach(function(time) {
+                                Result.records[uid].detailsF.push(formatTime(time));
+                            });
+                        }
+                    });
+                }
+            } else {
+                Result = {};
+                Result.records = {};
+                Result.scrambles = ['', '', '', '', ''];
+            }
+
+            $timeout(function() {
+                $scope.groups = Groups;
+                $scope.group = Groups[tag];
+                $scope.contest = Contest;
+                $scope.result = Result;
+                $scope.pageLoaded = true;
             });
         });
-
-        $timeout(function() {
-            $scope.groups = Groups;
-            $scope.group = Groups[tag];
-            $scope.contest = Contest;
-            $scope.result = Result;
-            $scope.pageLoaded = true;
         });
-    });
-    });
-    });
+        });
+    }
 
     // 参加者を追加
     $scope.append = function() {
         ref.child('results').child(gid).child(cid).child('records').push({
+            'name': '',
+            'details': [0, 0, 0, 0, 0],
             'puzzle': {
                 'id': 1472,
                 'name': 'YJ GuanLong'
@@ -162,6 +183,10 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
             'details': $scope.result.records[uid].details,
             'puzzle': $scope.result.records[uid].puzzle
         }
+        // 保存形式に合わせて変換
+        if (!(data.puzzle.id)) {
+            data.puzzle.id = null;
+        }
         ref.child('results').child(gid).child(cid).child('records').child(uid).update(data);
     };
     $scope.saveDetail = function(uid, index) {
@@ -171,7 +196,6 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
         // Check the format
         if (!(resultForm.match(/^([0-9]:)?[0-9]{1,3}(\.[0-9]{0,3})?$/))) {
             inputElem.parent().addClass('has-error');
-            console.log(resultForm);
         } else {
             // Convert to seconds
             if (resultForm.indexOf(':') != -1) {

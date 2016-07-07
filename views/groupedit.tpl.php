@@ -37,8 +37,8 @@
       </thead>
       <tbody>
         <tr ng-repeat="(cid, contest) in contests">
-          <td><input type="text" placeholder="コンテスト名" ng-model="contests[cid].name" ng-blur="save(cid)"></td>
-          <td><input type="text" placeholder="<?php echo TODAYSTR; ?>" ng-model="contests[cid].date" ng-blur="save(cid)"></td>
+          <td><input class="form-control" type="text" placeholder="コンテスト名" ng-model="contests[cid].name" ng-blur="save(cid)"></td>
+          <td><input class="form-control" type="text" placeholder="<?php echo TODAYSTR; ?>" ng-model="contests[cid].date" ng-blur="save(cid)"></td>
           <td>
             <a href="/<?php echo $tag; ?>/{{ cid | removeHead }}/edit" class="btn btn-default">コンテスト結果を編集</a>
             <button class="btn btn-defautl btn-danger" ng-click="remove(cid)">削除</button>
@@ -66,6 +66,9 @@ app.controller('GroupEditCtrl', ['$scope', '$timeout', function($scope, $timeout
         ref.child('groups').child('<?php echo $tag; ?>').once('value', function(snapGroup) {
             var Group = snapGroup.val();
             gid = Group.gid;
+            if (authData.uid != gid) {
+                location.href = '/<?php echo $tag; ?>/auth?next=/<?php echo $tag; ?>/edit';
+            }
         ref.child('contests').child(gid).on('value', function(snapContests) {
             var Contests = snapContests.val();
 
@@ -82,13 +85,14 @@ app.controller('GroupEditCtrl', ['$scope', '$timeout', function($scope, $timeout
     $scope.append = function() {
         ref.child('contests').child(gid).push({
             'name': '新しいコンテスト',
-            'date': '<?php echo TODAYSTR; ?>'
+            'date': '<?php echo TODAYSTR; ?>',
+            'createdAt': Firebase.ServerValue.TIMESTAMP
         });
     };
 
     // コンテストを保存
     $scope.save = function(cid) {
-        ref.child('contests').child(gid).child(cid).set({
+        ref.child('contests').child(gid).child(cid).update({
             'name': $scope.contests[cid].name,
             'date': $scope.contests[cid].date
         });

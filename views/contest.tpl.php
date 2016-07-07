@@ -92,9 +92,9 @@
       <h3>スクランブル</h3>
       <table id="table-scrambles" class="table table-sm">
         <tbody>
-          <tr ng-repeat="scramble in result.scrambles">
+          <tr ng-repeat="i in range(5)">
             <td>{{ $index + 1 }}</td>
-            <td>{{ scramble }}</td>
+            <td>{{ result.scrambles[$index] }}</td>
           </tr>
         </tbody>
       </table>
@@ -121,17 +121,21 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
         var Contest = snapContest.val();
     ref.child('results').child(gid).child(cid).once('value', function(snapResult) {
         var ResultObj = snapResult.val();
-        var Result = { 'records': [], 'scrambles': ResultObj.scrambles };
+        var Result = { 'records': [], 'scrambles': [] };
 
-        Object.keys(ResultObj.records).forEach(function(uid) {
-            var average = calcAverage5(ResultObj.records[uid].details);
-            ResultObj.records[uid].average = average;
-            ResultObj.records[uid].averageF = formatTime(average.average);
-            // 整数部をaverageの値(6桁)、小数部をbestの値(6桁)で表現して数値比較でランキングできるようにする
-            ResultObj.records[uid].priority = ( ('000000' + String(average.average).replace('.', '')).slice(-6) + '.' +
-                                             ('000000' + String(ResultObj.records[uid].details[average.best]).replace('.', '')).slice(-6) ) - 0;
-            Result.records.push(ResultObj.records[uid]);
-        });
+        if (ResultObj) {
+            Result.scrambles = ResultObj.scrambles;
+            Object.keys(ResultObj.records).forEach(function(uid) {
+                var average = calcAverage5(ResultObj.records[uid].details);
+                ResultObj.records[uid].average = average;
+                ResultObj.records[uid].averageF = formatTime(average.average);
+                // 整数部をaverageの値(6桁)、小数部をbestの値(6桁)で表現して数値比較でランキングできるようにする
+                ResultObj.records[uid].priority = (
+                    ('000000' + String(formatTimeAlt(average.average)).replace('.', '')).slice(-6) + '.' +
+                    ('000000' + String(formatTimeAlt(ResultObj.records[uid].details[average.best])).replace('.', '')).slice(-6) ) - 0;
+                Result.records.push(ResultObj.records[uid]);
+            });
+        }
 
         $timeout(function() {
             $scope.groups = Groups;
@@ -146,6 +150,13 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
     });
     });
     });
+
+    $scope.range = function(n) {
+        var arr = [];
+        for (var i = 0; i < n; i++)
+            arr.push(i);
+        return arr;
+    };
 }]);
 
 var setupTable = function() {

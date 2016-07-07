@@ -36,6 +36,9 @@
                     "date": {
                         ".validate": "newData.isString()"
                     },
+                    "createdAt": {
+                        ".validate": "newData.isNumber()"
+                    },
                     "$other": {
                         ".validate": false
                     }
@@ -62,7 +65,7 @@
                             },
                             "details": {
                                 "$seq": {
-                                    ".validate": "newData.isString()"
+                                    ".validate": "newData.isNumber() && 0 <= newData.val() && newData.val() < 1000"
                                 }
                             },
                             "puzzle": {

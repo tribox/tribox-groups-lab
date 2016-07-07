@@ -27,7 +27,7 @@
     </a>
 
     <ul>
-      <li ng-repeat="contest in contests | orderBy: '-cid'">
+      <li ng-repeat="contest in contests | orderBy: '-createdAt'">
         <a href="/<?php echo $tag; ?>/{{ contest.cid | removeHead }}">{{ contest.name }} ({{ contest.date }})</a>
       </li>
     </ul>
@@ -49,11 +49,14 @@ app.controller('GroupCtrl', ['$scope', '$timeout', function($scope, $timeout) {
         var ContestsObj = snapContests.val();
         var Contests = [];
 
-        Object.keys(ContestsObj).forEach(function(cid) {
-            var obj = ContestsObj[cid];
-            obj.cid = cid;
-            Contests.push(obj);
-        });
+        // 配列化
+        if (ContestsObj) {
+            Object.keys(ContestsObj).forEach(function(cid) {
+                var obj = ContestsObj[cid];
+                obj.cid = cid;
+                Contests.push(obj);
+            });
+        }
 
         $timeout(function() {
             $scope.group = Group;

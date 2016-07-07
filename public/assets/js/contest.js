@@ -4,6 +4,10 @@
 
 // タイムを分・秒・小数点以下3桁にフォーマットする
 var formatTime = function(input) {
+    if (input <= 0) {
+        return '';
+    }
+
     var post = '.000';
     var second = input - 0;
     if (String(input).indexOf('.') != -1) {
@@ -24,6 +28,29 @@ var formatTime = function(input) {
         } else {
             return (minute + ':' + s + post).substr(0, 9);
         }
+    }
+};
+
+// タイムを秒・小数点以下3桁にフォーマットする
+var formatTimeAlt = function(input) {
+    if (input <= 0) {
+        return '';
+    }
+
+    var post = '.000';
+    var second = input - 0;
+    if (String(input).indexOf('.') != -1) {
+        second = String(input).split('.')[0] - 0;
+        // 小数点以下が .31299999... みたいなときは .313 にしたいので4桁切り出して1桁目を四捨五入する
+        var decimal = (String(input).split('.')[1] + '0000').substr(0, 4) - 0;
+        post = '.' + ('000' + String(Math.round(decimal / 10))).slice(-3);
+    }
+    if (second < 10) {
+        return (second + post).substr(0, 5);
+    } else if (second < 100) {
+        return (second + post).substr(0, 6);
+    } else {
+        return (second + post).substr(0, 7);
     }
 };
 

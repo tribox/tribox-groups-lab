@@ -10,17 +10,21 @@
 <body>
   <?php include dirname(__FILE__) . '/header.tpl.php'; ?>
 
-  <div class="container" ng-controller="IndexCtrl">
+  <div class="container" ng-controller="IndexCtrl"><div class="loading-area" ng-hide="pageLoaded">
+    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+    Loading...
+  </div><div ng-show="pageLoaded">
 
     <div class="row">
-      <div class="col-md-6" ng-repeat="(tag, group) in groups">
+      <div class="col-md-4" ng-repeat="(tag, group) in groups">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h2 class="panel-title">{{ group.name }}</h2>
           </div><!-- /.panel-heading -->
           <div class="panel-body">
             <ul>
-              <li ng-repeat="contest in contests[group.gid] | orderBy: '-cid'">
+              <li ng-repeat="contest in contests[group.gid] | orderBy: '-createdAt'">
                 <a href="/{{ tag }}/{{ contest.cid | removeHead }}">{{ contest.name }} ({{ contest.date }})</a>
               </li>
             </ul>
@@ -28,7 +32,7 @@
           </div><!-- /.panel-body -->
         </div><!-- /.panel -->
       </div>
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h2 class="panel-title"></h2>
@@ -42,7 +46,7 @@
 
   <?php include dirname(__FILE__) . '/footer.tpl.php'; ?>
 
-  </div><!-- /.container -->
+  </div></div><!-- /.container -->
 
 <style>
 h2.panel-title {
@@ -54,6 +58,7 @@ h2.panel-title {
 app.controller('IndexCtrl', ['$scope', '$timeout', function($scope, $timeout) {
     $scope.groups = null;
     $scope.contests = null;
+    $scope.pageLoaded = false;
 
     ref.child('groups').once('value', function(snapGroups) {
         var Groups = snapGroups.val();
@@ -74,6 +79,7 @@ app.controller('IndexCtrl', ['$scope', '$timeout', function($scope, $timeout) {
         $timeout(function() {
             $scope.groups = Groups;
             $scope.contests = Contests;
+            $scope.pageLoaded = true;
         });
     });
     });

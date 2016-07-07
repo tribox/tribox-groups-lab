@@ -89,7 +89,7 @@ else if (preg_match('/^\/[a-zA-Z0-9]{1,15}\/edit$/', $request_uri)) {
     exit;
 }
 // コンテストページ
-else if (preg_match('/^\/[a-zA-Z0-9]{1,15}\/[a-zA-Z0-9]+$/', $request_uri)) {
+else if (preg_match('/^\/[a-zA-Z0-9]{1,15}\/[a-zA-Z0-9_-]+$/', $request_uri)) {
     $contest_page = true;
     $tag = $queries[1];
     $cid = $queries[2];
@@ -99,7 +99,7 @@ else if (preg_match('/^\/[a-zA-Z0-9]{1,15}\/[a-zA-Z0-9]+$/', $request_uri)) {
     exit;
 }
 // コンテストページ (編集中)
-else if (preg_match('/^\/[a-zA-Z0-9]{1,15}\/[a-zA-Z0-9]+\/edit$/', $request_uri)) {
+else if (preg_match('/^\/[a-zA-Z0-9]{1,15}\/[a-zA-Z0-9_-]+\/edit$/', $request_uri)) {
     $contest_page = true;
     $tag = $queries[1];
     $cid = $queries[2];
