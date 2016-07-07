@@ -3,5 +3,8 @@
 // Firebase app
 define('FIREBASE_APP', 'tribox-groups-lab');
 
+// Firebase user (%s is replaced by group tag)
+define('FIREBASE_USER', '%s@example.com');
+
 // Please do not include the tailing slash
 define('ABSOLUTE_URL', 'http://lab.tribox.com');

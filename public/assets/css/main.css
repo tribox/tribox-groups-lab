@@ -38,10 +38,19 @@ h2.inline-block {
     display: inline-block;
 }
 
-a.btn-cog {
+.btn-cog {
     margin-left: 10px;
     margin-bottom: 10px;
 }
+
+
+/**
+ * Loading
+ */
+.loading-area {
+    text-align: center;
+}
+
 
 /**
  * Table

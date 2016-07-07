@@ -24,16 +24,17 @@
                 <a href="/{{ tag }}/{{ contest.cid | removeHead }}">{{ contest.name }} ({{ contest.date }})</a>
               </li>
             </ul>
+            <a href="/{{ tag }}" class="btn btn-default btn-primary">{{ group.name }}の全コンテスト一覧</a>
           </div><!-- /.panel-body -->
         </div><!-- /.panel -->
       </div>
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h2 class="panel-title">研究室に限らず</h2>
+            <h2 class="panel-title"></h2>
           </div><!-- /.panel-heading -->
           <div class="panel-body">
-            お試しユーザ募集中。
+            
           </div><!-- /.panel-body -->
         </div><!-- /.panel -->
       </div>

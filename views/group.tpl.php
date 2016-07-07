@@ -10,7 +10,11 @@
 <body>
   <?php include dirname(__FILE__) . '/header.tpl.php'; ?>
 
-  <div class="container" ng-controller="GroupCtrl">
+  <div class="container" ng-controller="GroupCtrl"><div class="loading-area" ng-hide="pageLoaded">
+    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+    Loading...
+  </div><div ng-show="pageLoaded">
 
     <ol class="breadcrumb">
       <li><a href="/"><?php echo MAIN_TITLE; ?></a></li>
@@ -18,7 +22,7 @@
     </ol>
 
     <h2 class="inline-block">{{ group.name }} のコンテスト一覧</h2>
-    <a href="#" class="btn btn-default btn-cog" role="button">
+    <a href="/<?php echo $tag; ?>/edit" class="btn btn-default btn-cog" role="button">
         <i class="fa fa-cog"></i> 編集
     </a>
 
@@ -30,12 +34,13 @@
 
   <?php include dirname(__FILE__) . '/footer.tpl.php'; ?>
 
-  </div><!-- /.container -->
+  </div></div><!-- /.container -->
 
 <script>
 app.controller('GroupCtrl', ['$scope', '$timeout', function($scope, $timeout) {
     $scope.group = null;
     $scope.contests = null;
+    $scope.pageLoaded = false;
 
     ref.child('groups').child('<?php echo $tag; ?>').once('value', function(snapGroup) {
         var Group = snapGroup.val();
@@ -53,6 +58,7 @@ app.controller('GroupCtrl', ['$scope', '$timeout', function($scope, $timeout) {
         $timeout(function() {
             $scope.group = Group;
             $scope.contests = Contests;
+            $scope.pageLoaded = true;
         });
     });
     });

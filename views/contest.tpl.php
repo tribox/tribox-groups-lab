@@ -10,7 +10,11 @@
 <body>
   <?php include dirname(__FILE__) . '/header.tpl.php'; ?>
 
-  <div class="container" ng-controller="ContestCtrl">
+  <div class="container" ng-controller="ContestCtrl"><div class="loading-area" ng-hide="pageLoaded">
+    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
+    Loading...
+  </div><div ng-show="pageLoaded">
 
     <ol class="breadcrumb">
       <li><a href="/"><?php echo MAIN_TITLE; ?></a></li>
@@ -19,7 +23,7 @@
     </ol>
 
     <h2 class="inline-block">{{ contest.name }} <small>{{ group.name }}</small></h2>
-    <a href="#" class="btn btn-default btn-cog" role="button">
+    <a href="/<?php echo $tag; ?>/<?php echo $cid; ?>/edit" class="btn btn-default btn-cog" role="button">
         <i class="fa fa-cog"></i> 編集
     </a>
 
@@ -72,7 +76,7 @@
                 </span>
               </span>
             <td>
-              <a href="https://store.tribox.com/products/detail.php?product_id=<?php echo $result['puzzle']['id']; ?>" target="_blank" ng-show="record.puzzle.id">
+              <a href="https://store.tribox.com/products/detail.php?product_id={{ record.puzzle.id }}" target="_blank" ng-show="record.puzzle.id">
                 {{ record.puzzle.name }}
               </a>
               <span ng-show="!(record.puzzle.id)">
@@ -98,7 +102,7 @@
 
   <?php include dirname(__FILE__) . '/footer.tpl.php'; ?>
 
-  </div><!-- /.container -->
+  </div></div><!-- /.container -->
 
 <script>
 app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) {
@@ -106,9 +110,10 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
     $scope.group = null;
     $scope.contest = null;
     $scope.result = null;
+    $scope.pageLoaded = false;
 
     var tag = '<?php echo $tag; ?>'
-    var cid = 'c<?php echo $cid; ?>';
+    var cid = '-<?php echo $cid; ?>';
     ref.child('groups').once('value', function(snapGroups) {
         var Groups = snapGroups.val();
         var gid = Groups[tag].gid;
@@ -133,6 +138,7 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
             $scope.group = Groups[tag];
             $scope.contest = Contest;
             $scope.result = Result;
+            $scope.pageLoaded = true;
             $timeout(function() {
                 window.setupTable();
             }, 100);
