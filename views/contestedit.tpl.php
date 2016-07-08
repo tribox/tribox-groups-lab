@@ -184,8 +184,12 @@ app.controller('ContestCtrl', ['$scope', '$timeout', function($scope, $timeout) 
             'puzzle': $scope.result.records[uid].puzzle
         }
         // 保存形式に合わせて変換
+        // data.puzzle.id は文字列型なので変換
         if (!(data.puzzle.id)) {
             data.puzzle.id = null;
+        } else {
+            // 数値化
+            data.puzzle.id = data.puzzle.id - 0;
         }
         ref.child('results').child(gid).child(cid).child('records').child(uid).update(data);
     };
