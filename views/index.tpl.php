@@ -17,7 +17,7 @@
   </div><div ng-show="pageLoaded">
 
     <div class="row">
-      <div class="col-md-4" ng-repeat="(tag, group) in groups">
+      <div class="col-md-6" ng-repeat="(tag, group) in groups">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h2 class="panel-title">{{ group.name }}</h2>
@@ -32,16 +32,16 @@
           </div><!-- /.panel-body -->
         </div><!-- /.panel -->
       </div>
-      <div class="col-md-4">
+      <!--<div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h2 class="panel-title"></h2>
-          </div><!-- /.panel-heading -->
+          </div>
           <div class="panel-body">
             
-          </div><!-- /.panel-body -->
-        </div><!-- /.panel -->
-      </div>
+          </div>
+        </div>
+      </div>-->
     </div><!-- /.row -->
 
   <?php include dirname(__FILE__) . '/footer.tpl.php'; ?>
